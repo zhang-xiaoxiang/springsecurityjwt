@@ -51,15 +51,16 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                         .getBody()
                         .getSubject();
 
-                //这里主要是角色控制层角色new 的集合 权限[] 返回的带有-[],需要截取掉
-                System.out.println("user====>" + user.substring(0, user.length() - 3));
+
+                System.out.println("user====>" + user);
                 if (user != null) {
                     return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
                 }
                 return null;
             } catch (Exception e) {
                 e.getStackTrace();
-                logger.error("token 签名错误 " + e.getMessage());
+                //这里可以把异常分很细,简单起见,可以把异常打印一下,心理就有数了
+                logger.error("token 签名错误(详见) " + e.getMessage());
                 return null;
             }
         }

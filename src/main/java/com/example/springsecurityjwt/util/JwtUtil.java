@@ -34,7 +34,7 @@ public class JwtUtil {
                 //这个token应该是使用后只存在一个,就是说,比如你登录了6次,6次生成的token都是可以使用的,显然不符合逻辑,(在第二次登陆时删除之前的token)
                 // 把这个给redis管理,在redis查询到用户的token过期就算过期,且只有一个有效,之前的token无效(用逻辑代码处理)
                 // .setExpiration(new Date(System.currentTimeMillis() + 365 * 24 * 60 * 60 * 1000))
-                .setExpiration(new Date(System.currentTimeMillis() + 5 * 60 * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + 1 * 60 * 1000))
                 //采用什么算法是可以自己选择的，不一定非要采用HS512,使用的签名key =>TokenKey.SIGNING_KEY
                 .signWith(SignatureAlgorithm.HS512, TokenKey.SIGNING_KEY)
                 //iat: jwt的签发时间

@@ -1,7 +1,14 @@
 package com.example.springsecurityjwt.filter;
 
 import com.example.springsecurityjwt.constant.TokenKey;
+import com.example.springsecurityjwt.entity.User;
+import com.example.springsecurityjwt.repository.UserRepository;
+import com.example.springsecurityjwt.util.JwtUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
+import org.omg.PortableInterceptor.USER_EXCEPTION;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * token的校验
@@ -23,6 +32,9 @@ import java.util.ArrayList;
  * @author zhaoxinguo on 2017/9/13.
  */
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
+    @Autowired
+    UserRepository userRepository;
+
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
@@ -50,13 +62,9 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                         .parseClaimsJws(token.replace("Bearer ", ""))
                         .getBody()
                         .getSubject();
-
-
+                Header header = Jwts.header();
                 System.out.println("user====>" + user);
-                if (user != null) {
-                    return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-                }
-                return null;
+                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             } catch (Exception e) {
                 e.getStackTrace();
                 //这里可以把异常分很细,简单起见,可以把异常打印一下,心理就有数了

@@ -1,7 +1,6 @@
 package com.example.springsecurityjwt.util;
 
 
-
 import com.example.springsecurityjwt.constant.TokenKey;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -47,6 +46,9 @@ public class JwtUtil {
         response.addHeader("Authorization", "Bearer " + token);
         return "Bearer " + token;
     }
+
+
+
 
 
 }

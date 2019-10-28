@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+
 
 /**
  * UserController:用户接口
@@ -63,8 +65,12 @@ public class UserController {
     @PostMapping(value = "/login")
     public Object login(@RequestBody User user, HttpServletResponse response) {
         User userVo = userRepository.findByUsername(user.getUsername());
+
         System.out.println("---->" + userVo);
         if (userVo != null) {
+            //更新登陆时间
+            userVo.setLastlogindate(new Date());
+            userRepository.saveAndFlush(userVo);
             String token = JwtUtil.createToken(userVo.getUsername());
             System.out.println("Authorization:" + token);
             return "{\n" +

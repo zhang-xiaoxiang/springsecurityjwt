@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * User:用户实体类
@@ -24,6 +25,7 @@ public class User {
     private long id;
     private String username;
     private String password;
+    private Date lastlogindate;
  
 
 }
